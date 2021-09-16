@@ -1,4 +1,32 @@
-Windows : 
+Installation
+
+Pour installer la bibliothèque audiostream (nécessaire à ce projet) suivez les étapes ci-dessous :
+
+- En utilisant le terminal, allez dans in répertoire quelconque (attention, pour windows ouvrir le terminal en mode administrateur)
+
+
+👉 POUR MAC:
+
+- pip install Cython
+
+- brew install sdl
+
+- brew install sdl_mixer
+
+- git clone https://github.com/kivy/audiostream
+
+- cd audiostream
+
+- sudo python setup.py install           (ou bien : sudo python3 setup.py install)
+
+
+👉 POUR WINDOWS:
+
+- pip install Cython
+
+- python -m pip install docutils pygments pypiwin32 kivy_deps.sdl2 kivy_deps.glew
+
+- Téléchargez le fichier "audiostream_pc.zip" fourni dans l'onglet ressources de cette session.
 
 - Dézippez dans c:\audiostream
 
@@ -13,3 +41,60 @@ Windows :
         -> Installez ce fichier : http://go.microsoft.com/fwlink/?LinkId=691126
 
         -> Fermez et réouvrez votre terminal en mode administrateur, et retournez dans votre répertoire ("cd \audiostream"), puis refaites "python setup.py install"
+
+
+-> Si vous avez encore des erreurs, réessayez la procédure avec une version de python 3.7
+
+
+👉 POUR LINUX (UBUNTU / DEBIAN):
+
+
+ATTENTION : Cette formation assure le support pour PC WINDOWS et MAC, et non pour Linux.
+
+Cependant un des participants de cette formation a partagé quelques instructions si toutefois vous souhaitez réaliser ce projet sous linux :
+
+Pour Ubuntu et Debian quelques dépendances supplémentaires pour suivre ce cours
+
+En amont vous devez vous assurer d'avoir tout les paquets de base pour la compilation (gcc, build-essential, ect ...)
+
+POUR BREW
+
+Installer brew :
+$ /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+Ajouter brew aux variables d'environnement:
+$ eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
+
+POUR COMPILER AUDIOSTREAM
+
+$
+
+     sudo apt install libsdl2-2.0-0 libsdl2-gfx-1.0-0 libsdl2-image-2.0-0 libsdl2-mixer-2.0-0 libsdl2-net-2.0-0 libsdl2-ttf-2.0-0
+
+$ sudo apt-get install libsdl1.2-dev
+$ sudo apt-get install libsdl-mixer1.2-dev
+$ pip install kivy
+
+
+
+----
+
+👉 DANS TOUS LES CAS :
+
+----
+
+✅ Si vous faites "pip list" vous devriez voir "audiostream" apparaitre dans la liste.
+
+----
+
+Optionnel :
+
+Pour vérifier que tout fonctionne bien:
+
+- Allez dans le répertoire examples\sinslider
+
+- python main.py
+
+- Un programme devrait s'ouvrir et jouer un son.
+
+
+=> Si le programme "sinslider" fonctionne cela veut dire que tout est bon, même si vous verrez quelques avertissements au niveau de pycharm avec du code souligné, cela est normal, vous pourrez quand même lancer votre programme.

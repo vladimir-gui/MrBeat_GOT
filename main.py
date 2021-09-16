@@ -1,16 +1,16 @@
-# This is a sample Python script.
+from kivy.app import App
+from kivy.lang import Builder
+from kivy.uix.relativelayout import RelativeLayout
 
-# Press Maj+F10 to execute it or replace it with your code.
-# Press Double Shift to search everywhere for classes, files, tool windows, actions, and settings.
-
-
-def print_hi(name):
-    # Use a breakpoint in the code line below to debug your script.
-    print(f'Hi, {name}')  # Press Ctrl+F8 to toggle the breakpoint.
+Builder.load_file("track.kv")  # integration du track.kv dans fenetre principale (+voir mrbeat.kv)
 
 
-# Press the green button in the gutter to run the script.
-if __name__ == '__main__':
-    print_hi('PyCharm')
+class MainWidget(RelativeLayout):
+    pass
 
-# See PyCharm help at https://www.jetbrains.com/help/pycharm/
+
+class MrBeatApp(App):
+    pass
+
+
+MrBeatApp().run()
