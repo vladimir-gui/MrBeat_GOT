@@ -1,0 +1,15 @@
+Windows : 
+
+- Dézippez dans c:\audiostream
+
+- Allez dans ce répertoire dans le terminal : cd \audiostream
+
+- tapez la commande : set USE_SDL2=1
+
+- python setup.py install
+
+- Si vous avez l'erreur "error: Unable to find vcvarsall.bat"
+
+        -> Installez ce fichier : http://go.microsoft.com/fwlink/?LinkId=691126
+
+        -> Fermez et réouvrez votre terminal en mode administrateur, et retournez dans votre répertoire ("cd \audiostream"), puis refaites "python setup.py install"
