@@ -26,6 +26,8 @@ class MainWidget(RelativeLayout):
         self.audio_engine = AudioEngine()
         # self.audio_engine.play_sound(kick_sound.samples)  # kick au demarrage
 
+        self.audio_engine.create_track(kick_sound.samples, 60)
+
     def on_parent(self, widget, parent):
         """on_parent attend que l'app soit instanciee pour continuer"""
         nb_tracks = self.sound_kit_service.get_nb_tracks()
