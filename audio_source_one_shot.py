@@ -15,6 +15,7 @@ class AudioSourceOneShot(ThreadSource):
 
     def set_wave_samples(self, wav_samples):
         self.wav_samples = wav_samples
+        self.current_sample_index = 0
         self.nb_wav_samples = len(wav_samples)
 
     def get_bytes(self, *args, **kwargs):
