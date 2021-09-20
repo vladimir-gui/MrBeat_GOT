@@ -24,14 +24,14 @@ class MainWidget(RelativeLayout):
         kick_sound = self.sound_kit_service.get_song_at(0)
 
         self.audio_engine = AudioEngine()
-        self.audio_engine.play_sound(kick_sound.samples)
+        # self.audio_engine.play_sound(kick_sound.samples)  # kick au demarrage
 
     def on_parent(self, widget, parent):
         """on_parent attend que l'app soit instanciee pour continuer"""
         nb_tracks = self.sound_kit_service.get_nb_tracks()
         for i in range(0, nb_tracks):
             sound = self.sound_kit_service.get_song_at(i)
-            self.tracks_layout.add_widget(TrackWidget(sound))
+            self.tracks_layout.add_widget(TrackWidget(sound, self.audio_engine))
 
 
 class MrBeatApp(App):
