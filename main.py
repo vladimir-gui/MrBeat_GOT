@@ -7,12 +7,6 @@ from track import TrackWidget
 
 Builder.load_file("track.kv")  # integration du track.kv dans fenetre principale (+voir mrbeat.kv)
 
-# NB_TRACKS = 4
-
-# TrackSoundButton
-# dp(100)
-#  text: "SON"
-
 
 class MainWidget(RelativeLayout):
     tracks_layout = ObjectProperty()
