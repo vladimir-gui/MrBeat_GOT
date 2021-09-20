@@ -2,6 +2,8 @@ from kivy.app import App
 from kivy.lang import Builder
 from kivy.properties import ObjectProperty
 from kivy.uix.relativelayout import RelativeLayout
+
+from audio_engine import AudioEngine
 from model.sound_kit_service import SoundKitService
 from track import TrackWidget
 
@@ -18,6 +20,11 @@ class MainWidget(RelativeLayout):
     def __init__(self, **kwargs):
         super(MainWidget, self).__init__(**kwargs)
         self.sound_kit_service = SoundKitService()
+
+        kick_sound = self.sound_kit_service.get_song_at(0)
+
+        self.audio_engine = AudioEngine()
+        self.audio_engine.play_sound(kick_sound.samples)
 
     def on_parent(self, widget, parent):
         """on_parent attend que l'app soit instanciee pour continuer"""
