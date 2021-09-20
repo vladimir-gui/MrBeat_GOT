@@ -9,7 +9,7 @@ class TrackStepButton(ToggleButton):
     pass
 
 
-class SoundKitButton(Button):
+class TrackSoundButton(Button):
     pass
 
 
@@ -17,6 +17,8 @@ class TrackWidget(BoxLayout):
     """ structure d'un track """
     def __init__(self, **kwargs):
         super(TrackWidget, self).__init__(**kwargs)
-        self.add_widget(SoundKitButton())  # ajout nom du soundkit
+        sound_button = TrackSoundButton()
+        sound_button.text = "nom du son"
+        self.add_widget(sound_button)  # ajout nom du soundkit
         for i in range(0, TRACK_NB_STEPS):  # ajout des stepbutton
             self.add_widget(TrackStepButton())
