@@ -8,6 +8,10 @@ from track import TrackWidget
 Builder.load_file("track.kv")  # integration du track.kv dans fenetre principale (+voir mrbeat.kv)
 
 
+# button play/stop
+# hauteur dp(100)
+# creer class custom controlbutton heritant de button
+
 class MainWidget(RelativeLayout):
     tracks_layout = ObjectProperty()
     
@@ -19,8 +23,8 @@ class MainWidget(RelativeLayout):
         """on_parent attend que l'app soit instanciee pour continuer"""
         nb_tracks = self.sound_kit_service.get_nb_tracks()
         for i in range(0, nb_tracks):
-            self.tracks_layout.add_widget(TrackWidget())
-
+            sound = self.sound_kit_service.get_song_at(i)
+            self.tracks_layout.add_widget(TrackWidget(sound))
 
 
 class MrBeatApp(App):
