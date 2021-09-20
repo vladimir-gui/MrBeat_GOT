@@ -7,7 +7,11 @@ from track import TrackWidget
 
 Builder.load_file("track.kv")  # integration du track.kv dans fenetre principale (+voir mrbeat.kv)
 
-NB_TRACKS = 4
+# NB_TRACKS = 4
+
+# TrackSoundButton
+# dp(100)
+#  text: "SON"
 
 
 class MainWidget(RelativeLayout):
@@ -19,7 +23,8 @@ class MainWidget(RelativeLayout):
 
     def on_parent(self, widget, parent):
         """on_parent attend que l'app soit instanciee pour continuer"""
-        for i in range(0, NB_TRACKS):
+        nb_tracks = self.sound_kit_service.get_nb_tracks()
+        for i in range(0, nb_tracks):
             self.tracks_layout.add_widget(TrackWidget())
 
 

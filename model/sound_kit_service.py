@@ -21,7 +21,7 @@ class SoundKit1(SoundKit):
 
 class SoundKitService:
     """selection du soundkit"""
-    soundkit = SoundKit()
+    soundkit = SoundKit1()
 
     def get_nb_tracks(self):
         return self.soundkit.get_nb_tracks()
