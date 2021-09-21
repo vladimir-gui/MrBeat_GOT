@@ -23,7 +23,7 @@ class TrackWidget(BoxLayout):
         self.add_widget(sound_button)  # ajout nom du soundkit
         self.audio_engine = audio_engine
         self.sound = sound
-        self.track_source = audio_engine.create_track(sound.samples, 120)
+        # self.track_source = audio_engine.create_track(sound.samples, 120)
 
         self.step_buttons = []
         for i in range(0, TRACK_NB_STEPS):  # ajout des stepbutton
@@ -45,7 +45,7 @@ class TrackWidget(BoxLayout):
                 steps.append(0)
         print(steps)
         # par track on aura un track_source
-        self.track_source.set_steps(steps)
+        # self.track_source.set_steps(steps)
 
 
 #     si clic sur bouton step button on realise un fonction qui genere un un tableau (tuple)

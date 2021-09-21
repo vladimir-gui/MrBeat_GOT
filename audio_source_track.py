@@ -35,7 +35,7 @@ class AudioSourceTrack(ThreadSource):
                 self.step_nb_samples = n
                 self.buf = array("h", b"\x00\x00" * self.step_nb_samples)
 
-    def get_bytes(self, *args, **kwargs):
+    def get_bytes_array(self):
         for i in range(0, self.step_nb_samples):
             if len(self.steps) > 0:
                 if self.steps[self.current_step_index] == 1 and i < self.nb_wav_samples:
@@ -57,4 +57,7 @@ class AudioSourceTrack(ThreadSource):
         if self.current_step_index >= len(self.steps):
             self.current_step_index = 0
 
-        return self.buf.tobytes()
+        return self.buf
+
+    def get_bytes(self, *args, **kwargs):
+        return self.get_bytes_array().tobytes()
