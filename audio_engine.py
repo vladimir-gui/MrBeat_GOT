@@ -21,4 +21,5 @@ class AudioEngine:
     def create_track(self, wav_samples, bpm):
         source_track = AudioSourceTrack(self.output_stream, wav_samples, bpm, self.SAMPLE_RATE)
         # source_track.set_steps((1, 0, 0, 0))  # generation track manuel
-        # source_track.start()
+        source_track.start()
+        return source_track
