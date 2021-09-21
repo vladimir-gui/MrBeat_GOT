@@ -44,9 +44,9 @@ class AudioSourceTrack(ThreadSource):
                     self.buf[i] = 0
             else:
                 self.buf[i] = 0
+            self.current_sample_index += 1
 
-        self.current_sample_index += 1
-
+        self.current_step_index += 1
         if self.current_step_index >= len(self.steps):
             self.current_step_index = 0
 
