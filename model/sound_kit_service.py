@@ -17,15 +17,18 @@ class Sound:
         frames = wav_file.readframes(self.nb_frames_samples)  # bytes : 8bits
         self.samples = array("h", frames)  # conversion en 16 bits # self permet de stocker info au niveau de la class
 
-    def play_sound(self):
-        pass
-
 
 class SoundKit:
     sounds = ()
 
     def get_nb_tracks(self):
         return len(self.sounds)
+
+    def get_all_samples(self):
+        all_samples = []
+        for i in range(0, len(self.sounds)):
+            all_samples.append(self.sounds[i].samples)
+        return all_samples
 
 class SoundKit1(SoundKit):
     sounds = (Sound("./sounds/kit1/kick.wav", "KICK"),

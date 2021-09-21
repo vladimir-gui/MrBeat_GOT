@@ -1,6 +1,8 @@
 from array import array
 from audiostream.sources.thread import ThreadSource
 
+from audio_source_track import AudioSourceTrack
+
 
 class AudioSourceMixer(ThreadSource):
     buf = None

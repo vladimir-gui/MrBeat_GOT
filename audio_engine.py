@@ -1,5 +1,6 @@
 from audiostream.core import get_output
 
+from audio_source_mixer import AudioSourceMixer
 from audio_source_one_shot import AudioSourceOneShot
 from audio_source_track import AudioSourceTrack
 
@@ -23,3 +24,8 @@ class AudioEngine:
         # source_track.set_steps((1, 0, 0, 0))  # generation track manuel
         source_track.start()
         return source_track
+
+    def create_mixer(self, all_wav_samples, bpm, nb_steps):
+        source_mixer = AudioSourceMixer(self.output_stream, all_wav_samples, bpm, self.SAMPLE_RATE, nb_steps)
+        source_mixer.start()
+        return source_mixer
