@@ -16,9 +16,9 @@ class AudioSourceTrack(ThreadSource):
         self.bpm = bpm
         self.sample_rate = sample_rate
         self.compute_step_nb_samples_and_alloc_buffer()
-        self.last_sound_sample_start_index = 0
-        # self.last_sound_sample_start_index = -self.nb_wav_samples  # FIX : evite de jouer le son au demarrage
-        self.no_steps_activated()
+        # self.last_sound_sample_start_index = 0
+        self.last_sound_sample_start_index = -self.nb_wav_samples  # FIX V1 : evite de jouer le son au demarrage
+        # self.no_steps_activated() # FIX V2 : evite de jouer le son au demarrage
 
     def set_steps(self, steps):
         if not len(steps) == len(self.steps):  # evite le rejeu boucle si changement step
@@ -37,19 +37,20 @@ class AudioSourceTrack(ThreadSource):
                 self.step_nb_samples = n
                 self.buf = array("h", b"\x00\x00" * self.step_nb_samples)
 
-    def no_steps_activated(self):
-        """ FIX : evite de jouer le son au demarrage"""
-        if len(self.steps) == 0:
-            return True  # tous steps desactivés ou aucun step
-
-        for i in range(0, len(self.steps)):
-            if self.steps[i] == 1:
-                return False  # au moins un step activé
-        return True
+    # def no_steps_activated(self):
+    #     """ FIX V2 : evite de jouer le son au demarrage"""
+    #     if len(self.steps) == 0:
+    #         return True  # tous steps desactivés ou aucun step
+    #
+    #     for i in range(0, len(self.steps)):
+    #         if self.steps[i] == 1:
+    #             return False  # au moins un step activé
+    #     return True
 
     def get_bytes_array(self):
         for i in range(0, self.step_nb_samples):
-            if len(self.steps) > 0 and not self.no_steps_activated(): # FIX : evite de jouer le son au demarrage
+            # if len(self.steps) > 0 and not self.no_steps_activated(): # FIX V2 : evite de jouer le son au demarrage
+            if len(self.steps) > 0:
                 if self.steps[self.current_step_index] == 1 and i < self.nb_wav_samples:
                     # lancer mon son
                     self.buf[i] = self.wav_samples[i]  # buffer temporaire du chunk
