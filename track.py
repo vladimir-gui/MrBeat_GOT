@@ -13,7 +13,7 @@ class TrackSoundButton(Button):
 
 class TrackWidget(BoxLayout):
     """ structure d'un track """
-    def __init__(self, sound, audio_engine, nb_steps, **kwargs):
+    def __init__(self, sound, audio_engine, nb_steps, track_source, **kwargs):
         super(TrackWidget, self).__init__(**kwargs)
         sound_button = TrackSoundButton()
         sound_button.text = sound.displayname
@@ -22,6 +22,7 @@ class TrackWidget(BoxLayout):
         self.audio_engine = audio_engine
         self.sound = sound
         # self.track_source = audio_engine.create_track(sound.samples, 120)
+        self.track_source = track_source
 
         self.step_buttons = []
         self.nb_steps = nb_steps
@@ -44,7 +45,5 @@ class TrackWidget(BoxLayout):
                 steps.append(0)
         print(steps)
         # par track on aura un track_source
-        # self.track_source.set_steps(steps)
+        self.track_source.set_steps(steps)
 
-
-#     si clic sur bouton step button on realise un fonction qui genere un un tableau (tuple)

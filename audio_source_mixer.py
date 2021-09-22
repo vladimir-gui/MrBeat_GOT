@@ -24,7 +24,7 @@ class AudioSourceMixer(ThreadSource):
         for i in range(0, len(all_wav_samples)):
             track = AudioSourceTrack(output_stream, all_wav_samples[i], bpm, sample_rate)
             track.set_steps((0,) * nb_steps)
-            self.tracks.append(track)
+            self.tracks.append(track)  # memorise les pas dans le track
 
         self.nb_steps = nb_steps
         self.current_sample_index = 0
@@ -60,7 +60,6 @@ class AudioSourceMixer(ThreadSource):
             self.buf[i] = 0
             for j in range(0, len(track_buffers)):
                 self.buf[i] += track_buffers[j][i]  # addition des buffer de tous les track pour synchronisation
-
 
         self.current_step_index += 1
         if self.current_step_index >= self.nb_steps:
