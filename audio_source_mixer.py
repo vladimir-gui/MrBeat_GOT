@@ -26,7 +26,8 @@ class AudioSourceMixer(ThreadSource):
             track.set_steps((0,) * nb_steps)
             self.tracks.append(track)  # memorise les pas dans le track
 
-        self.buf = array("h", b"\x00\x00" * self.tracks[0].buffer_nb_samples)
+        self.buf = None
+        self.silence = array("h", b"\x00\x00" * self.tracks[0].buffer_nb_samples)
 
         self.nb_steps = nb_steps
         self.min_bpm = min_bpm
@@ -65,9 +66,9 @@ class AudioSourceMixer(ThreadSource):
 
         # silence
         if not self.is_playing:
-            for i in range(0, step_nb_samples):
-                self.buf[i] = 0
-            return self.buf[0:step_nb_samples].tobytes()
+            # for i in range(0, step_nb_samples):
+            #     self.buf[i] = 0
+            return self.silence[0:step_nb_samples].tobytes()
 
         track_buffers = []
         for i in range(0, len(self.tracks)):  # + track + la boucle est longue
@@ -75,10 +76,13 @@ class AudioSourceMixer(ThreadSource):
             track_buffer = track.get_bytes_array()
             track_buffers.append(track_buffer)
 
-        for i in range(0, step_nb_samples):
-            self.buf[i] = 0
-            for j in range(0, len(track_buffers)):
-                self.buf[i] += track_buffers[j][i]  # addition des buffer de tous les track pour synchronisation
+        # for i in range(0, step_nb_samples):
+        #     self.buf[i] = 0
+        #     for j in range(0, len(track_buffers)):
+        #         self.buf[i] += track_buffers[j][i]  # addition des buffer de tous les track pour synchronisation
+
+        s = map(sum, zip(*track_buffers))
+        self.buf = array("h", s)
 
         # ici on envoi current_step_index à notre PlayIndicator
         if self.on_current_step_changed is not None:

@@ -23,7 +23,7 @@ class AudioSourceTrack(ThreadSource):
 
         self.step_nb_samples = self.compute_step_nb_samples(bpm)
         self.buffer_nb_samples = self.compute_step_nb_samples(min_bpm)
-        self.buf = array("h", b"\x00\x00" * self.buffer_nb_samples)
+        # self.buf = array("h", b"\x00\x00" * self.buffer_nb_samples)
         self.silence = array("h", b"\x00\x00" * self.buffer_nb_samples)
 
     def set_steps(self, steps):
@@ -58,32 +58,43 @@ class AudioSourceTrack(ThreadSource):
             result_buf = self.silence[0:self.step_nb_samples]
         elif self.steps[self.current_step_index] == 1 :
             # 2 - Step activé et le son à plus de samples que 1 step
-
-
-
-        for i in range(0, self.step_nb_samples):
-            # if len(self.steps) > 0 and not self.no_steps_activated(): # FIX V2 : evite de jouer le son au demarrage
-            if len(self.steps) > 0:
-                if self.steps[self.current_step_index] == 1 and i < self.nb_wav_samples:
-                    # lancer mon son
-                    self.buf[i] = self.wav_samples[i]  # buffer temporaire du chunk
-                    if i == 0:
-                        self.last_sound_sample_start_index = self.current_sample_index
-                else:
-                    index_into_sound = self.current_sample_index-self.last_sound_sample_start_index
-                    if index_into_sound < self.nb_wav_samples:
-                        self.buf[i] = self.wav_samples[index_into_sound]  # corrige bug si son non terminé
-                    else:
-                        self.buf[i] = 0
+            self.last_sound_sample_start_index = self.current_sample_index
+            if self.nb_wav_samples >= self.step_nb_samples:
+                result_buf = self.wav_samples[0:self.step_nb_samples]
             else:
-                self.buf[i] = 0
-            self.current_sample_index += 1
+                # 3 - Step activé et le son à moins de samples que 1 step
+                silence_nb_samples = self.step_nb_samples-self.nb_wav_samples
+                result_buf = self.wav_samples[0:self.nb_wav_samples]
+                result_buf.extend(self.silence[0:silence_nb_samples])  # ajoute des données a la fin du result_buf
+        else:
+            # 4 - Step non activé  mais on doit jouer la suite du son
+            index = self.current_sample_index-self.last_sound_sample_start_index
+            # 4.1 - ce qui nous reste à jouer est plus long qu'un step
+            if index > self.nb_wav_samples:
+                # 5 - Step non activé  et on a fini de jouer le son -> silence
+                result_buf = self.silence[0:self.step_nb_samples]
+
+            elif self.nb_wav_samples-index >= self.step_nb_samples:
+                result_buf = self.wav_samples[index:self.step_nb_samples+index]
+            else:
+                # 4.2 - ce qui nous reste à jouer est moins long qu'un step
+                silence_nb_samples = self.step_nb_samples-(self.nb_wav_samples-index)
+                result_buf = self.wav_samples[index:self.nb_wav_samples]
+                result_buf.extend(self.silence[0:silence_nb_samples])
+
+        self.current_sample_index += self.step_nb_samples
 
         self.current_step_index += 1
         if self.current_step_index >= len(self.steps):
             self.current_step_index = 0
 
-        return self.buf[0:self.step_nb_samples]
+        # gestion des erreurs
+        if result_buf is None:
+            print("result_buf est None = probleme")
+        elif not len(result_buf) == self.step_nb_samples:
+            print("result_buf len is not step_nb_samples = error")
+
+        return result_buf
 
     def get_bytes(self, *args, **kwargs):
         return self.get_bytes_array().tobytes()
