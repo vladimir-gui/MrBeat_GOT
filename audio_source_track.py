@@ -25,7 +25,7 @@ class AudioSourceTrack(ThreadSource):
             self.current_step_index = 0
         self.steps = steps
 
-    def bpm(self, bpm):
+    def set_bpm(self, bpm):
         self.bpm = bpm
         self.compute_step_nb_samples_and_alloc_buffer()
 
