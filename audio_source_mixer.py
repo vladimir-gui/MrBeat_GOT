@@ -26,8 +26,11 @@ class AudioSourceMixer(ThreadSource):
             track.set_steps((0,) * nb_steps)
             self.tracks.append(track)  # memorise les pas dans le track
 
+        self.buf = array("h", b"\x00\x00" * self.tracks[0].buffer_nb_samples)
+
         self.nb_steps = nb_steps
         self.min_bpm = min_bpm
+        self.bpm = bpm
         self.current_sample_index = 0
         self.current_step_index = 0
         self.sample_rate = sample_rate
@@ -44,8 +47,8 @@ class AudioSourceMixer(ThreadSource):
     def set_bpm(self, bpm):
         if bpm < self.min_bpm:
             return
-        for i in range(0, len(self.tracks)):
-            self.tracks[i].set_bpm(bpm)
+        self.bpm = bpm
+
 
     def audio_play(self):
         self.is_playing = True
@@ -55,18 +58,19 @@ class AudioSourceMixer(ThreadSource):
 
     def get_bytes(self, *args, **kwargs):  # chemin critique = besoin de reponse temps reel ! MEF au boucles
 
-        #RETRAVAILLER
-        step_nb_samples = self.tracks[0].step_nb_samples
-        if self.buf == None or not len(self.buf) == step_nb_samples:
-            self.buf = array("h", b"\x00\x00" * step_nb_samples)
+        for i in range(0, len(self.tracks)):
+            self.tracks[i].set_bpm(self.bpm)  # calage des tracks sur le bpm
 
+        step_nb_samples = self.tracks[0].step_nb_samples
+
+        # silence
         if not self.is_playing:
             for i in range(0, step_nb_samples):
                 self.buf[i] = 0
-            return self.buf.tobytes()
+            return self.buf[0:step_nb_samples].tobytes()
 
         track_buffers = []
-        for i in range(0, len(self.tracks)):
+        for i in range(0, len(self.tracks)):  # + track + la boucle est longue
             track = self.tracks[i]
             track_buffer = track.get_bytes_array()
             track_buffers.append(track_buffer)
@@ -88,4 +92,4 @@ class AudioSourceMixer(ThreadSource):
         if self.current_step_index >= self.nb_steps:
             self.current_step_index = 0
 
-        return self.buf.tobytes()
+        return self.buf[0:step_nb_samples].tobytes()
