@@ -11,7 +11,10 @@ class AudioEngine:
     BUFFER_SIZE = 1024
 
     def __init__(self):
-        self.output_stream = get_output(channels=self.NB_CHANNELS, rate=self.SAMPLE_RATE, buffersize=self.BUFFER_SIZE)
+        self.output_stream = get_output(channels=self.NB_CHANNELS,
+                                        rate=self.SAMPLE_RATE,
+                                        buffersize=self.BUFFER_SIZE)
+
         self.audio_source_one_shot = AudioSourceOneShot(self.output_stream)
         self.audio_source_one_shot.start()
 
@@ -25,6 +28,12 @@ class AudioEngine:
         return source_track
 
     def create_mixer(self, all_wav_samples, bpm, nb_steps, on_current_step_changed, min_bpm):
-        source_mixer = AudioSourceMixer(self.output_stream, all_wav_samples, bpm, self.SAMPLE_RATE, nb_steps, on_current_step_changed, min_bpm)
+        source_mixer = AudioSourceMixer(self.output_stream,
+                                        all_wav_samples,
+                                        bpm,
+                                        self.SAMPLE_RATE,
+                                        nb_steps,
+                                        on_current_step_changed,
+                                        min_bpm)
         source_mixer.start()  # ici pas de probleme si step à 0 au debut 16
         return source_mixer

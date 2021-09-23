@@ -1,7 +1,20 @@
 from array import array
+
 from audiostream.sources.thread import ThreadSource
 
 from audio_source_track import AudioSourceTrack
+
+MAX_16BITS = 32767
+MIN_16BITS = -32768
+
+def sum_16bits(n):
+    """fonction statique ne depend pas de la classe -- correction du probleme d'overflow"""
+    s = sum(n)
+    if s < MIN_16BITS:
+        s = MIN_16BITS
+    if s > MAX_16BITS:
+        s = MAX_16BITS
+    return s
 
 
 class AudioSourceMixer(ThreadSource):
@@ -20,18 +33,18 @@ class AudioSourceMixer(ThreadSource):
 
     def __init__(self, output_stream, all_wav_samples, bpm, sample_rate, nb_steps, on_current_step_changed, min_bpm, *args, **kwargs):
         ThreadSource.__init__(self, output_stream, *args, **kwargs)
+
         self.tracks = []
         for i in range(0, len(all_wav_samples)):
             track = AudioSourceTrack(output_stream, all_wav_samples[i], bpm, sample_rate, min_bpm)
             track.set_steps((0,) * nb_steps)
             self.tracks.append(track)  # memorise les pas dans le track
 
+        self.bpm = bpm
         self.buf = None
         self.silence = array("h", b"\x00\x00" * self.tracks[0].buffer_nb_samples)
-
         self.nb_steps = nb_steps
         self.min_bpm = min_bpm
-        self.bpm = bpm
         self.current_sample_index = 0
         self.current_step_index = 0
         self.sample_rate = sample_rate
@@ -81,7 +94,7 @@ class AudioSourceMixer(ThreadSource):
         #     for j in range(0, len(track_buffers)):
         #         self.buf[i] += track_buffers[j][i]  # addition des buffer de tous les track pour synchronisation
 
-        s = map(sum, zip(*track_buffers))
+        s = map(sum_16bits, zip(*track_buffers))
         self.buf = array("h", s)
 
         # ici on envoi current_step_index à notre PlayIndicator

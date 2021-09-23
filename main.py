@@ -71,7 +71,6 @@ class MainWidget(RelativeLayout):
 
     def on_bpm(self, widget, value):
         """ defini le min et max BPM"""
-        print(f"BPM : {value}")
         if value < MIN_BPM:
             self.bpm = 80
             return
