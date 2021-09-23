@@ -8,6 +8,7 @@ from model.sound_kit_service import SoundKitService
 from track import TrackWidget
 
 Builder.load_file("track.kv")  # integration du track.kv dans fenetre principale (+voir mrbeat.kv)
+Builder.load_file("play_indicator.kv")  # integration du play_indicator.kv dans fenetre principale (+voir mrbeat.kv)
 
 TRACK_NB_STEPS = 16
 
