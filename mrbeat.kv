@@ -1,4 +1,5 @@
 #: import track track
+#: import play_indicator play_indicator
 
 MainWidget:  # Widget principal
 
@@ -6,16 +7,21 @@ MainWidget:  # Widget principal
 
 <MainWidget>:
     tracks_layout: tracks_layout
+    play_indicator_widget:play_indicator_widget
     BoxLayout:
         orientation: "vertical"
         BoxLayout: # gestion des boutons de controles
-            id : control_button
-            size_hint: 1, None
-            height: dp(100)
+            size_hint_y: None
+            height: dp(50)
             ControlButton:
                 text: "PLAY"
             ControlButton:
                 text: "STOP"
+        PlayIndicatorWidget:
+            id: play_indicator_widget
+            size_hint_y: None
+            height: dp(8)
+            left_align: root.TRACK_STEPS_LEFT_ALIGN
         BoxLayout:  # gestion des tracks
             id : tracks_layout
             orientation: "vertical"
