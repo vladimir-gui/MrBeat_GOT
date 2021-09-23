@@ -16,14 +16,9 @@ class AudioSourceTrack(ThreadSource):
         self.min_bpm = min_bpm
         self.bpm = bpm
         self.sample_rate = sample_rate
-        # self.compute_step_nb_samples_and_alloc_buffer()
         self.last_sound_sample_start_index = 0
-        # self.last_sound_sample_start_index = -self.nb_wav_samples  # FIX V1 : evite de jouer le son au demarrage
-        # self.no_steps_activated() # FIX V2 : evite de jouer le son au demarrage
-
         self.step_nb_samples = self.compute_step_nb_samples(bpm)
         self.buffer_nb_samples = self.compute_step_nb_samples(min_bpm)
-        # self.buf = array("h", b"\x00\x00" * self.buffer_nb_samples)
         self.silence = array("h", b"\x00\x00" * self.buffer_nb_samples)
 
     def set_steps(self, steps):
