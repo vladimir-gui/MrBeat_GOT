@@ -1,5 +1,7 @@
+from kivy.metrics import dp
 from kivy.uix.boxlayout import BoxLayout
 from kivy.uix.button import Button
+from kivy.uix.image import Image
 from kivy.uix.togglebutton import ToggleButton
 
 
@@ -15,20 +17,35 @@ class TrackWidget(BoxLayout):
     """ structure d'un track """
     def __init__(self, sound, audio_engine, nb_steps, track_source, steps_left_align, **kwargs):
         super(TrackWidget, self).__init__(**kwargs)
-        sound_button = TrackSoundButton()
-        sound_button.text = sound.displayname
-        sound_button.width = steps_left_align
-        sound_button.on_press = self.on_sound_button_press
-        self.add_widget(sound_button)  # ajout nom du soundkit
+
         self.audio_engine = audio_engine
         self.sound = sound
-        # self.track_source = audio_engine.create_track(sound.samples, 120)
         self.track_source = track_source
 
+        # boxlayout button separator
+        boxlayout_button_separator = BoxLayout()
+        boxlayout_button_separator.size_hint_x = None
+        boxlayout_button_separator.width = steps_left_align
+        self.add_widget(boxlayout_button_separator)
+
+        # sound_button
+        sound_button = TrackSoundButton()
+        sound_button.text = sound.displayname
+        sound_button.on_press = self.on_sound_button_press
+        boxlayout_button_separator.add_widget(sound_button)  # ajout nom du soundkit
+
+        # separateur
+        separator_image = Image(source="images/track_separator.png")
+        separator_image.size_hint_x = None
+        separator_image.width = dp(15)
+        boxlayout_button_separator.add_widget(separator_image)
+
+
+
+        # self.track_source = audio_engine.create_track(sound.samples, 120)
         self.step_buttons = []
         self.nb_steps = nb_steps
         for i in range(0, nb_steps):  # ajout des stepbutton
-            print(i % 8)
             step_button = TrackStepButton()  # je definis le bouton
             # if i % 8 < 4:  # V1
             if int(i/4) % 2 == 0:

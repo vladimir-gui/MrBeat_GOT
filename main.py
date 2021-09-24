@@ -19,7 +19,7 @@ MAX_BPM = 160
 class MainWidget(RelativeLayout):
     tracks_layout = ObjectProperty()
     play_indicator_widget = ObjectProperty()
-    TRACK_STEPS_LEFT_ALIGN = NumericProperty(dp(100))
+    TRACK_STEPS_LEFT_ALIGN = NumericProperty(dp(120))
     step_index = 0
     bpm = NumericProperty(80)
     
