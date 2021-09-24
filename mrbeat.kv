@@ -12,30 +12,46 @@ MainWidget:  # Widget principal
     play_indicator_widget:play_indicator_widget
     BoxLayout:
         orientation: "vertical"
-        # top layout
-        BoxLayout: # gestion des boutons de controles
+        # top layout rework
+        RelativeLayout:
             size_hint_y: None
-            height: dp(50)
-            ControlButton:
-                text: "PLAY"
-                on_press: root.on_play_button_pressed()
-            ControlButton:
-                text: "STOP"
-                on_press: root.on_stop_button_pressed()
-            ControlButton:
-                text: "-"
+            height: dp(60)
+            Image:
+                source:"images/top_background.png"
+                allow_stretch: True
+                keep_ratio: False
+            Image:
+                source:"images/logo.png"
+                allow_stretch: True
                 size_hint_x: None
-                width: dp(50)
-                on_press: root.bpm -= 5
-            Label:
-                text: str(root.bpm)
+                width: dp(230)
+            BoxLayout:
                 size_hint_x: None
-                width: dp(80)
-            ControlButton:
-                text: "+"
+                pos_hint: {"center_x": 0.5}
+                width: dp(120)
+                ControlButton:
+                    text: "PLAY"
+                    on_press: root.on_play_button_pressed()
+                ControlButton:
+                    text: "STOP"
+                    on_press: root.on_stop_button_pressed()
+            BoxLayout: # gestion des boutons de controles
                 size_hint_x: None
-                width: dp(50)
-                on_press: root.bpm += 5
+                width: dp(180)
+                pos_hint: {"right": 1}
+                ControlButton:
+                    text: "-"
+                    size_hint_x: None
+                    width: dp(50)
+                    on_press: root.bpm -= 5
+                Label:
+                    text: str(root.bpm)
+                ControlButton:
+                    text: "+"
+                    size_hint_x: None
+                    width: dp(50)
+                    on_press: root.bpm += 5
+
         # bottom layout
         RelativeLayout:
             Image:
