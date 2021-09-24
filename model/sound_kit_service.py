@@ -31,6 +31,7 @@ class SoundKit:
             all_samples.append(self.sounds[i].samples)
         return all_samples
 
+
 class SoundKit1(SoundKit):
     sounds = (Sound("sounds/kit1/kick.wav", "KICK"),
               Sound("sounds/kit1/clap.wav", "CLAP"),
@@ -38,39 +39,16 @@ class SoundKit1(SoundKit):
               Sound("sounds/kit1/snare.wav", "SNARE"))
 
 
-class SoundKit2(SoundKit):
+class SoundKit1All(SoundKit):
     sounds = (Sound("sounds/kit1/kick.wav", "KICK"),
               Sound("sounds/kit1/clap.wav", "CLAP"),
               Sound("sounds/kit1/shaker.wav", "SHAKER"),
               Sound("sounds/kit1/snare.wav", "SNARE"),
-              Sound("sounds/kit1/kick.wav", "KICK"),
-              Sound("sounds/kit1/clap.wav", "CLAP"),
-              Sound("sounds/kit1/shaker.wav", "SHAKER"),
-              Sound("sounds/kit1/snare.wav", "SNARE"),
-              Sound("sounds/kit1/kick.wav", "KICK"),
-              Sound("sounds/kit1/clap.wav", "CLAP"),
-              Sound("sounds/kit1/shaker.wav", "SHAKER"),
-              Sound("sounds/kit1/snare.wav", "SNARE"),
-              Sound("sounds/kit1/kick.wav", "KICK"),
-              Sound("sounds/kit1/clap.wav", "CLAP"),
-              Sound("sounds/kit1/shaker.wav", "SHAKER"),
-              Sound("sounds/kit1/snare.wav", "SNARE"),
-              Sound("sounds/kit1/kick.wav", "KICK"),
-              Sound("sounds/kit1/clap.wav", "CLAP"),
-              Sound("sounds/kit1/shaker.wav", "SHAKER"),
-              Sound("sounds/kit1/snare.wav", "SNARE"),
-              Sound("sounds/kit1/kick.wav", "KICK"),
-              Sound("sounds/kit1/clap.wav", "CLAP"),
-              Sound("sounds/kit1/shaker.wav", "SHAKER"),
-              Sound("sounds/kit1/snare.wav", "SNARE"),
-              Sound("sounds/kit1/kick.wav", "KICK"),
-              Sound("sounds/kit1/clap.wav", "CLAP"),
-              Sound("sounds/kit1/shaker.wav", "SHAKER"),
-              Sound("sounds/kit1/snare.wav", "SNARE"),
-              Sound("sounds/kit1/kick.wav", "KICK"),
-              Sound("sounds/kit1/clap.wav", "CLAP"),
-              Sound("sounds/kit1/shaker.wav", "SHAKER"),
-              Sound("sounds/kit1/snare.wav", "SNARE"))
+              Sound("sounds/kit1/bass.wav", "BASS"),
+              Sound("sounds/kit1/effects.wav", "EFFECTS"),
+              Sound("sounds/kit1/pluck.wav", "PLUCK"),
+              Sound("sounds/kit1/vocal_chop.wav", "VOCAL")
+              )
 
 
 class SoundKit3(SoundKit):
@@ -119,7 +97,7 @@ class SoundKit4(SoundKit):
 
 class SoundKitService:
     """selection du soundkit"""
-    soundkit = SoundKit1()
+    soundkit = SoundKit1All()
 
     def get_nb_tracks(self):
         return self.soundkit.get_nb_tracks()

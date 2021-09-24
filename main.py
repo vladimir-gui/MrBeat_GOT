@@ -34,11 +34,13 @@ class MainWidget(RelativeLayout):
     TRACK_STEPS_LEFT_ALIGN = NumericProperty(dp(120))
     step_index = 0
     bpm = NumericProperty(115)
+    nb_tracks = NumericProperty(0)
     
     def __init__(self, **kwargs):
         super(MainWidget, self).__init__(**kwargs)
         self.sound_kit_service = SoundKitService()
 
+        self.nb_tracks = self.sound_kit_service.get_nb_tracks()
         # kick_sound = self.sound_kit_service.get_song_at(0)
 
         self.audio_engine = AudioEngine()
@@ -57,14 +59,14 @@ class MainWidget(RelativeLayout):
         # self.play_indicator_widget.set_current_step_index(16)   # test de la fonction current
         for i in range(0, self.sound_kit_service.get_nb_tracks()):
             sound = self.sound_kit_service.get_song_at(i)
-            self.tracks_layout.add_widget(Widget())  # ! methode pour repartir track en hauteur !!
+            self.tracks_layout.add_widget(VerticalSpacingWidget())  # ! methode pour repartir track en hauteur !!
             self.tracks_layout.add_widget(TrackWidget(sound,
                                                       self.audio_engine,
                                                       TRACK_NB_STEPS,
                                                       self.mixer.tracks[i],
                                                       self.TRACK_STEPS_LEFT_ALIGN)
                                           )
-        self.tracks_layout.add_widget(Widget())  # ! methode pour repartir track en hauteur !!
+        self.tracks_layout.add_widget(VerticalSpacingWidget())  # ! methode pour repartir track en hauteur !!
 
 
     def on_mixer_current_step_changed(self, step_index):
