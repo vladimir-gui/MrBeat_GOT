@@ -28,29 +28,58 @@ MainWidget:  # Widget principal
             BoxLayout:
                 size_hint_x: None
                 pos_hint: {"center_x": 0.5}
-                width: dp(120)
+                width: dp(165)
                 ControlButton:
-                    text: "PLAY"
+                    background_normal: "images/play_button_normal.png"
+                    background_down: "images/play_button_down.png"
                     on_press: root.on_play_button_pressed()
                 ControlButton:
-                    text: "STOP"
+                    background_normal: "images/stop_button_normal.png"
+                    background_down: "images/stop_button_down.png"
                     on_press: root.on_stop_button_pressed()
             BoxLayout: # gestion des boutons de controles
                 size_hint_x: None
                 width: dp(180)
                 pos_hint: {"right": 1}
                 ControlButton:
-                    text: "-"
                     size_hint_x: None
-                    width: dp(50)
+                    width: dp(40)
                     on_press: root.bpm -= 5
-                Label:
-                    text: str(root.bpm)
+                    background_normal: "images/minus_button_normal.png"
+                    background_down: "images/minus_button_down.png"
+                RelativeLayout:
+                    Image:
+                        source: "images/bpm_lcd_background.png"
+                        allow_stretch: True
+                        keep_ratio: False
+                    Label:
+                        pos: -dp(3), dp(2)
+                        text: "888"
+                        font_name: "fonts/lcd.ttf"
+                        font_size: dp(36)
+                        opacity: 0.1
+                        color: 0, 1, 1, 1
+                    Label:
+                        pos: -dp(3), dp(2)
+                        # canvas.before:
+                        #     Rectangle:
+                        #         source: "images/bpm_lcd_background.png"
+                        #         pos: self.pos
+                        #         size: self.size
+                        text: "{:0>3}".format(str(root.bpm))
+                        font_name: "fonts/lcd.ttf"
+                        font_size: dp(36)
+                        color: 0, 1, 1, 1
                 ControlButton:
-                    text: "+"
                     size_hint_x: None
-                    width: dp(50)
+                    width: dp(40)
                     on_press: root.bpm += 5
+                    background_normal: "images/plus_button_normal.png"
+                    background_down: "images/plus_button_down.png"
+                Widget:  # invisible -- permet de generer une marge a droite en relatif
+                    size_hint_x: None
+                    width: dp(20)
+
 
         # bottom layout
         RelativeLayout:

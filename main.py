@@ -21,7 +21,7 @@ class MainWidget(RelativeLayout):
     play_indicator_widget = ObjectProperty()
     TRACK_STEPS_LEFT_ALIGN = NumericProperty(dp(120))
     step_index = 0
-    bpm = NumericProperty(80)
+    bpm = NumericProperty(115)
     
     def __init__(self, **kwargs):
         super(MainWidget, self).__init__(**kwargs)
