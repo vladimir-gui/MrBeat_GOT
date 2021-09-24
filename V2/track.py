@@ -28,13 +28,7 @@ class TrackWidget(BoxLayout):
         self.step_buttons = []
         self.nb_steps = nb_steps
         for i in range(0, nb_steps):  # ajout des stepbutton
-            print(i % 8)
             step_button = TrackStepButton()  # je definis le bouton
-            # if i % 8 < 4:  # V1
-            if int(i/4) % 2 == 0:
-                step_button.background_normal = "images/step_normal1.png"  # optionnel deja defini dans kv
-            else:
-                step_button.background_normal = "images/step_normal2.png"
             step_button.bind(state=self.on_step_button_state)  # je bind = affecte l'etat du bouton à une fonction
             self.step_buttons.append(step_button)
             self.add_widget(step_button)

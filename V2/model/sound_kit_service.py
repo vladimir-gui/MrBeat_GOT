@@ -119,7 +119,7 @@ class SoundKit4(SoundKit):
 
 class SoundKitService:
     """selection du soundkit"""
-    soundkit = SoundKit1()
+    soundkit = SoundKit4()
 
     def get_nb_tracks(self):
         return self.soundkit.get_nb_tracks()
