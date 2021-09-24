@@ -1,3 +1,11 @@
+from kivy import Config
+from kivy.uix.widget import Widget
+
+Config.set("graphics", "width", "780")
+Config.set("graphics", "height", "360")
+Config.set("graphics", "minimum_width", "650")
+Config.set("graphics", "minimum_height", "300")
+
 from kivy.app import App
 from kivy.lang import Builder
 from kivy.metrics import dp
@@ -14,6 +22,10 @@ Builder.load_file("play_indicator.kv")  # integration du play_indicator.kv dans 
 TRACK_NB_STEPS = 16
 MIN_BPM = 80
 MAX_BPM = 160
+
+
+class VerticalSpacingWidget(Widget):
+    pass
 
 
 class MainWidget(RelativeLayout):
@@ -45,12 +57,14 @@ class MainWidget(RelativeLayout):
         # self.play_indicator_widget.set_current_step_index(16)   # test de la fonction current
         for i in range(0, self.sound_kit_service.get_nb_tracks()):
             sound = self.sound_kit_service.get_song_at(i)
+            self.tracks_layout.add_widget(Widget())  # ! methode pour repartir track en hauteur !!
             self.tracks_layout.add_widget(TrackWidget(sound,
                                                       self.audio_engine,
                                                       TRACK_NB_STEPS,
                                                       self.mixer.tracks[i],
                                                       self.TRACK_STEPS_LEFT_ALIGN)
                                           )
+        self.tracks_layout.add_widget(Widget())  # ! methode pour repartir track en hauteur !!
 
 
     def on_mixer_current_step_changed(self, step_index):
